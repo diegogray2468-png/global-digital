@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLOBAL DIGITAL</title>
+    <!-- Netlify Identity Widget -->
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        header {
+            background-color: #00b4d8;
+            color: #0b132b;
+            text-align: center;
+            padding: 25px 20px;
+            position: relative;
+        }
+        .lang-switch {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+        }
+        .lang-switch select {
+            padding: 5px 10px;
+            border-radius: 15px;
+            border: 1px solid #0b132b;
+            background-color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .profile-container {
+            margin-bottom: 10px;
+        }
+        .profile-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        h1 {
+            margin: 10px 0 5px 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+            color: #0b132b;
+        }
+        p.subtitle {
+            margin: 0 0 15px 0;
+            color: #03045e;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        nav {
+            margin-top: 15px;
+            border-top: 1px solid rgba(11, 19, 43, 0.2);
+            padding-top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: #0b132b;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .login-btn {
+            background-color: #0b132b;
+            color: #ffffff !important;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .container {
+            max-width: 800px;
+            margin: 25px auto;
+            padding: 0 20px;
+        }
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .btn-post {
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .btn-post:hover {
+            background-color: #023e8a;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 11px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .post-card {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .post-card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Language Switcher (Default set to English) -->
+        <div class="lang-switch">
+            <select id="languageSelect" onchange="changeLanguage()">
+                <option value="en" selected>English 🇬🇧</option>
+                <option value="sw">Kiswahili 🇹🇿</option>
+                <option value="fr">Français 🇫🇷</option>
+            </select>
+        </div>
+
+        <!-- Profile Logo -->
+        <div class="profile-container">
+            <img src="profil.jpg" alt="GLOBAL DIGITAL Logo" class="profile-logo" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300'">
+        </div>
+
+        <h1>WELCOME TO GLOBAL DIGITAL</h1>
+        <p class="subtitle" id="txt-subtitle">Graphic Design & Digital Services</p>
+
+        <nav>
+            <a href="#about" id="nav-about">About Us</a> | 
+            <a href="#services" id="nav-services">Our Services</a> | 
+            <a href="#posts" id="nav-posts">Posts & Media</a> | 
+            <span data-netlify-identity-button class="login-btn">Login / Admin</span>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Admin Control Panel -->
+        <div id="admin-panel" class="card" style="display: none;">
+            <h3 id="admin-title">Admin Control Panel</h3>
+            <input type="text" id="post-title" placeholder="Post Title">
+            <textarea id="post-desc" rows="3" placeholder="Description.."></textarea>
+            <input type="text" id="post-link" placeholder="Image/Video URL">
+            <button class="btn-post" id="btn-publish" onclick="publishPost()">Publish Post</button>
+        </div>
+
+        <!-- Services Section -->
+        <div id="services" class="card">
+            <h2 id="services-title">OUR SERVICES</h2>
+            <p id="srv-1">✔️ Graphic Design Solutions</p>
+            <p id="srv-2">✔️ Video Editing & Production</p>
+            <p id="srv-3">✔️ Digital Branding & Marketing</p>
+        </div>
+
+        <!-- Posts & Media Section -->
+        <div id="posts" class="card">
+            <h2 id="posts-title">POSTS & MEDIA</h2>
+            <div id="posts-container">
+                
+                <!-- Lion Post -->
+                <div class="post-card">
+                    <h3 id="post1-title">The Lion Concept - Graphic Art</h3>
+                    <p id="post1-desc">New graphic design and photo editing work from GLOBAL DIGITAL.</p>
+                    <img src="lion.jpg" alt="Lion Artwork">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                subtitle: "Graphic Design & Digital Services",
+                navAbout: "About Us",
+                navServices: "Our Services",
+                navPosts: "Posts & Media",
+                adminTitle: "Admin Control Panel",
+                btnPublish: "Publish Post",
+                servicesTitle: "OUR SERVICES",
+                srv1: "✔️ Graphic Design Solutions",
+                srv2: "✔️ Video Editing & Production",
+                srv3: "✔️ Digital Branding & Marketing",
+                postsTitle: "POSTS & MEDIA",
+                post1Title: "The Lion Concept - Graphic Art",
+                post1Desc: "New graphic design and photo editing work from GLOBAL DIGITAL."
+            },
+            sw: {
+                subtitle: "Ubunifu wa Picha & Huduma za Kidijitali",
+                navAbout: "Kuhusu Sisi",
+                navServices: "Huduma Zetuu",
+                navPosts: "Posts & Media",
+                adminTitle: "Jopo la Utawala (Admin Panel)",
+                btnPublish: "Chapisha Post",
+                servicesTitle: "HUDUMA ZETU",
+                srv1: "✔️ Suluhisho za Ubunifu wa Picha (Graphic Design)",
+                srv2: "✔️ Uhariri wa Video & Utengenezaji",
+                srv3: "✔️ Masoko ya Kidijitali & Utambulisho wa Biashara",
+                postsTitle: "POSTS & MEDIA",
+                post1Title: "Dhana ya Simba - Sanaa ya Picha (The Lion Concept)",
+                post1Desc: "Kazi mpya ya ubunifu wa picha na muundo kutoka GLOBAL DIGITAL."
+            },
+            fr: {
+                subtitle: "Conception Graphique & Services Numériques",
+                navAbout: "À Propos",
+                navServices: "Nos Services",
+                navPosts: "Publications & Médias",
+                adminTitle: "Panneau d'Administration",
+                btnPublish: "Publier le Post",
+                servicesTitle: "NOS SERVICES",
+                srv1: "✔️ Solutions de Conception Graphique",
+                srv2: "✔️ Montage Vidéo & Production",
+                srv3: "✔️ Image de Marque & Marketing Numérique",
+                postsTitle: "PUBLICATIONS & MÉDIAS",
+                post1Title: "Le Concept Lion - Art Graphique",
+                post1Desc: "Nouveau travail de conception graphique et de retouche photo par GLOBAL DIGITAL."
+            }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById("languageSelect").value;
+            const t = translations[lang];
+
+            document.getElementById("txt-subtitle").innerText = t.subtitle;
+            document.getElementById("nav-about").innerText = t.navAbout;
+            document.getElementById("nav-services").innerText = t.navServices;
+            document.getElementById("nav-posts").innerText = t.navPosts;
+            document.getElementById("admin-title").innerText = t.adminTitle;
+            document.getElementById("btn-publish").innerText = t.btnPublish;
+            document.getElementById("services-title").innerText = t.servicesTitle;
+            document.getElementById("srv-1").innerText = t.srv1;
+            document.getElementById("srv-2").innerText = t.srv2;
+            document.getElementById("srv-3").innerText = t.srv3;
+            document.getElementById("posts-title").innerText = t.postsTitle;
+            document.getElementById("post1-title").innerText = t.post1Title;
+            document.getElementById("post1-desc").innerText = t.post1Desc;
+        }
+
+        // Netlify Identity Management & Admin Panel Toggle
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (user) {
+                    document.getElementById("admin-panel").style.display = "block";
+                }
+            });
+            window.netlifyIdentity.on("login", user => {
+                document.getElementById("admin-panel").style.display = "block";
+                window.netlifyIdentity.close();
+            });
+            window.netlifyIdentity.on("logout", () => {
+                document.getElementById("admin-panel").style.display = "none";
+            });
+        }
+
+        function publishPost() {
+            let title = document.getElementById("post-title").value;
+            let desc = document.getElementById("post-desc").value;
+            let link = document.getElementById("post-link").value;
+
+            if (title && desc) {
+                let postsContainer = document.getElementById("posts-container");
+                let postHTML = `
+                    <div class="post-card">
+                        <h3>${title}</h3>
+                        <p>${desc}</p>
+                        ${link ? <img src="${link}" alt="Post Image"> : ''}
+                    </div>
+                `;
+                postsContainer.innerHTML = postHTML + postsContainer.innerHTML;
+                
+                document.getElementById("post-title").value = '';
+                document.getElementById("post-desc").value = '';
+                document.getElementById("post-link").value = '';
+            } else {
+                alert("Please fill in both Title and Description!");
+            }
+        }
+    </script>
+
+</body>
+</html>
