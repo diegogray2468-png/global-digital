@@ -7,15 +7,16 @@
 
   <!-- Script mpya ya ku-login -->
   <script>
-    function handleAdminLogin() {
-      let password = prompt("Entrez le mot de passe administrateur :");
-      if (password === "votre_mot_de_passe") {
-        alert("Connexion réussie !");
-      } else if (password !== null) {
-        alert("Mot de passe incorrect.");
-      }
+    function handleAdminlogin() {
+        let password = prompt("Entrez le mot de passe administrateur :");
+        if (password === "votre_mot_de_passe") {
+            alert("Connexion réussie !");
+            // Ajoute ici le code pour afficher ton panneau d'admin
+        } else if (password !== null) {
+            alert("Mot de passe incorrect.");
+        }
     }
-  </script>
+</script>
 
   <style>
     body {
