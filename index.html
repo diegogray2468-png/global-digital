@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GLOBAL DIGITAL</title>
-    <!-- Netlify Identity Widget -->
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <style>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GLOBAL DIGITAL</title>
+
+  <!-- Script mpya ya ku-login -->
+  <script>
+    function handleAdminLogin() {
+      let password = prompt("Entrez le mot de passe administrateur :");
+      if (password === "votre_mot_de_passe") {
+        alert("Connexion réussie !");
+      } else if (password !== null) {
+        alert("Mot de passe incorrect.");
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
