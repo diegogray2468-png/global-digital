@@ -11,7 +11,11 @@
         let password = prompt("Entrez le mot de passe administrateur :");
         if (password === "diego257") {
             alert("Connexion réussie !");
-            // Ajoute ici le code pour afficher ton panneau d'admin
+           let adminPanel = document.getElementById("admin-panel");
+           if (adminPanel) {
+               adminPanel.style.display = "block";
+               adminPanel.scrollIntoView({ behavior: 'smooth' });
+           }
         } else if (password !== null) {
             alert("Mot de passe incorrect.");
         }
