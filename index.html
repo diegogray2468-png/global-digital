@@ -180,7 +180,7 @@
             <h3 id="admin-title">Admin Control Panel</h3>
             <input type="text" id="post-title" placeholder="Post Title">
             <textarea id="post-desc" rows="3" placeholder="Description.."></textarea>
-            <input type="file" id="post-link" placeholder="Image/Video URL">
+            <input type="file" id="post-file" accept="Image/*,Video/*">
             <button class="btn-post" id="btn-publish" onclick="publishPost()">Publish Post</button>
         </div>
 
@@ -192,21 +192,18 @@
             <p id="srv-3">✔️ Digital Branding & Marketing</p>
         </div>
 
-        <!-- Posts & Media Section -->
-        <div id="posts" class="card">
-            <h2 id="posts-title">POSTS & MEDIA</h2>
-            <div id="posts-container">
-                
-                <!-- Lion Post -->
-                <div class="post-card">
-                    <h3 id="post1-title">The Lion Concept - Graphic Art</h3>
-                    <p id="post1-desc">New graphic design and photo editing work from GLOBAL DIGITAL.</p>
-                    <img src="lion.jpg" alt="Lion Artwork">
-                </div>
-
-            </div>
-        </div>
+       <!-- -- Posts & Media Section -- -->
+<div id="posts" class="card">
+    <h2 id="posts-title">POSTS & MEDIA</h2>
+    <div id="posts-container">
+        <img src="HOME.JPG" alt="picha" style="width:100%;">
+        <img src="HOMEN.JPG" alt="picha" style="width:100%;">
+        <video width="100%" controls>
+            <source src="BIRTHDAY GGC.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de vidéos.
+        </video>
     </div>
+</div>
 
     <script>
         const translations = {
@@ -292,30 +289,94 @@
             });
         }
 
-        function publishPost() {
-            let title = document.getElementById("post-title").value;
-            let desc = document.getElementById("post-desc").value;
-            let link = document.getElementById("post-link").value;
+function publishPost() {
+    const title = document.getElementById('post-title').value;
+    const desc = document.getElementById('post-desc').value;
+    const fileInput = document.getElementById('post-link');
 
-            if (title && desc) {
-                let postsContainer = document.getElementById("posts-container");
-                let postHTML = `
-                    <div class="post-card">
-                        <h3>${title}</h3>
-                        <p>${desc}</p>
-                        ${link ? <img src="${link}" alt="Post Image"> : ''}
-                    </div>
-                `;
-                postsContainer.innerHTML = postHTML + postsContainer.innerHTML;
-                
-                document.getElementById("post-title").value = '';
-                document.getElementById("post-desc").value = '';
-                document.getElementById("post-link").value = '';
-            } else {
-                alert("Please fill in both Title and Description!");
-            }
+    let postsContainer = document.getElementById('posts-container');
+    if (!postsContainer) {
+        postsContainer = document.createElement('div');
+        postsContainer.id = 'posts-container';
+        document.getElementById('admin-panel').after(postsContainer);
+    }
+
+    if (title === '' && desc === '' && fileInput.files.length === 0) {
+        alert('Tafadhali jaza kichwa, maelezo, au chagua picha/video!');
+        return;
+    }
+
+    let postCard = document.createElement('div');
+    postCard.style.cssText = "background: #fff; padding: 15px; margin-top: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);";
+    
+    let htmlContent = '<h3 style="margin: 0 0 10px 0; color: #333;">' + title + '</h3>';
+    htmlContent += '<p style="margin: 0 0 10px 0; color: #555;">' + desc + '</p>';
+
+    if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const fileUrl = URL.createObjectURL(file);
+        if (file.type.startsWith('video/')) {
+            htmlContent += '<video controls src="' + fileUrl + '" style="max-width:100%; border-radius:8px; margin-top:10px;"></video>';
+        } else {
+            htmlContent += '<img src="' + fileUrl + '" alt="Post Image" style="max-width:100%; border-radius:8px; margin-top:10px;">';
         }
-    </script>
+    }
 
+    postCard.innerHTML = htmlContent;
+    postsContainer.prepend(postCard);
+
+    document.getElementById('post-title').value = '';
+    document.getElementById('post-desc').value = '';
+    fileInput.value = '';
+}
+script>
+document.addEventListener("DOMContentLoaded", function() {
+    const publishBtn = document.getElementById('btn-publish');
+    if (publishBtn) {
+        publishBtn.addEventListener('click', function() {
+            const title = document.getElementById('post-title').value;
+            const desc = document.getElementById('post-desc').value;
+            const fileInput = document.getElementById('post-file');
+            
+            if (!title && !desc && fileInput.files.length === 0) {
+                alert("Veuillez remplir au moins un champ ou choisir un fichier !");
+                return;
+            }
+
+            const container = document.getElementById('posts-container');
+            const newPost = document.createElement('div');
+            newPost.style.marginBottom = '20px';
+            newPost.style.padding = '15px';
+            newPost.style.border = '1px solid #ddd';
+            newPost.style.borderRadius = '8px';
+            newPost.style.background = '#fff';
+
+            let contentHtml = '<h3 style="margin-bottom: 5px;">' + title + '</h3><p style="margin-bottom: 10px;">' + desc + '</p>';
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const fileUrl = URL.createObjectURL(file);
+                
+                if (file.type.startsWith('image/')) {
+                    contentHtml += '<img src="' + fileUrl + '" style="width:100%; max-height:400px; object-fit:cover; border-radius:5px;">';
+                } else if (file.type.startsWith('video/')) {
+                    contentHtml += '<video width="100%" controls style="border-radius:5px;"><source src="' + fileUrl + '" type="' + file.type + '"></video>';
+                } else {
+                    contentHtml += '<div style="padding: 12px; background: #f1f1f1; border-radius: 5px; margin-top: 10px;"><a href="' + fileUrl + '" target="_blank" style="color: #0056b3; font-weight: bold; text-decoration: none;">📁 Fichier joint: ' + file.name + '</a></div>';
+                }
+            }
+
+            newPost.innerHTML = contentHtml;
+            container.prepend(newPost);
+
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-desc').value = '';
+            fileInput.value = '';
+
+            alert("Post publié avec succès !");
+        });
+    }
+});
+</script>
 </body>
 </html>
